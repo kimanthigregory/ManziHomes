@@ -1,5 +1,3 @@
-// src/app/designs/[slug]/page.tsx
-
 import { designs } from "@/data/designs";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -7,47 +5,43 @@ import Button from "@/components/Button";
 import { BedDouble, Bath, Square, Layers } from "lucide-react";
 import type { Metadata } from "next";
 
-// Define the Props interface for type safety (optional but good practice)
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+// Define the type for the component's props
+type Props = {
+  params: { slug: string };
+};
 
 // For generating static pages at build time
 export async function generateStaticParams() {
   return designs.map((design) => ({ slug: design.slug }));
 }
 
-// MAKE THIS FUNCTION ASYNC
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  // AWAIT the params to get the resolved object
-  const resolvedParams = await params;
-  const design = designs.find((d) => d.slug === resolvedParams.slug);
-
+// For generating metadata dynamically - corrected typing here as well
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const design = designs.find((d) => d.slug === params.slug);
   if (!design) {
-    return { title: "Design Not Found" };
+    return {
+      title: "Design Not Found | ManziHomes",
+      description: "The requested architectural design could not be found.",
+    };
   }
   return {
-    title: design.title,
+    title: `${design.title} | ManziHomes`,
     description: design.description,
   };
 }
 
-// MAKE THIS COMPONENT ASYNC
-export default async function DesignDetailPage({ params }: PageProps) {
-  // AWAIT the params to get the resolved object
-  const resolvedParams = await params;
-  const design = designs.find((d) => d.slug === resolvedParams.slug);
+// Apply the new 'Props' type to the component function
+export default function DesignDetailPage({ params }: Props) {
+  const design = designs.find((d) => d.slug === params.slug);
 
   if (!design) {
     notFound();
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 mt-20">
+      {" "}
+      {/* Added mt-20 for spacing */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
         <div className="lg:col-span-3">
           <Image
@@ -55,14 +49,16 @@ export default async function DesignDetailPage({ params }: PageProps) {
             alt={design.title}
             width={1200}
             height={800}
-            className="w-full h-auto object-cover mb-4 rounded"
+            className="w-full h-auto object-cover mb-4 rounded-lg shadow-lg"
             priority
           />
-          {/* Add more images here if you want a gallery */}
+          {/* You can map over design.images here for a gallery */}
         </div>
 
         <div className="lg:col-span-2">
-          <p className="text-brand-gold mb-2">{design.category}</p>
+          <p className="text-brand-gold mb-2 font-semibold tracking-wider">
+            {design.category.toUpperCase()}
+          </p>
           <h1 className="text-brand-green mb-6">{design.title}</h1>
           <p className="text-gray-600 leading-relaxed mb-8">
             {design.description}
