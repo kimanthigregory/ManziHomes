@@ -5,7 +5,6 @@ import { designs } from "@/data/designs";
 import Link from "next/link";
 import { FaPenRuler } from "react-icons/fa6";
 import { ArrowRight, Landmark, Users, Star } from "lucide-react";
-import { motion } from "framer-motion"; // Make sure to re-import motion if it was removed previously
 
 export default function HomePage() {
   const featuredDesigns = designs.slice(0, 3);
