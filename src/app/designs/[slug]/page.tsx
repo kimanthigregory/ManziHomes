@@ -5,13 +5,16 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { BedDouble, Bath, Square, Layers } from "lucide-react";
-import type { Metadata } from "next"; // Make sure to import Metadata type if you're not already
+import type { Metadata } from "next";
 
-// Define the Props interface for type safety
-interface PageProps {
-  params: {
-    slug: string;
-  };
+// Define the PageProps interface with the 'next' namespace
+// This helps prevent conflicts with auto-generated types
+declare module "next" {
+  interface PageProps {
+    params: {
+      slug: string;
+    };
+  }
 }
 
 // For generating static pages at build time
@@ -22,7 +25,9 @@ export async function generateStaticParams() {
 // For generating metadata dynamically
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const design = designs.find((d) => d.slug === params.slug);
   if (!design) {
     return { title: "Design Not Found" };
@@ -33,7 +38,12 @@ export async function generateMetadata({
   };
 }
 
-export default function DesignDetailPage({ params }: PageProps) {
+// Use the local type definition for the component
+export default function DesignDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const design = designs.find((d) => d.slug === params.slug);
 
   if (!design) {
