@@ -1,5 +1,4 @@
 // src/app/designs/[slug]/page.tsx
-
 import { designs } from "@/data/designs";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -7,26 +6,22 @@ import Button from "@/components/Button";
 import { BedDouble, Bath, Square, Layers } from "lucide-react";
 import type { Metadata } from "next";
 
-// This is still a good practice for type safety
-interface PageProps {
+type PageProps = {
   params: {
     slug: string;
   };
-}
+};
 
-// generateStaticParams does not need to be async because it doesn't await params
 export async function generateStaticParams() {
   return designs.map((design) => ({ slug: design.slug }));
 }
 
-// MAKE THIS FUNCTION ASYNC and AWAIT params
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
-  // Await the params to get the resolved object
-  const resolvedParams = await params;
-  const design = designs.find((d) => d.slug === resolvedParams.slug);
-
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const design = designs.find((d) => d.slug === params.slug);
   if (!design) {
     return { title: "Design Not Found" };
   }
@@ -36,15 +31,10 @@ export async function generateMetadata({
   };
 }
 
-// MAKE THIS COMPONENT ASYNC and AWAIT params
-export default async function DesignDetailPage({ params }: PageProps) {
-  // Await the params to get the resolved object
-  const resolvedParams = await params;
-  const design = designs.find((d) => d.slug === resolvedParams.slug);
+export default function DesignDetailPage({ params }: PageProps) {
+  const design = designs.find((d) => d.slug === params.slug);
 
-  if (!design) {
-    notFound();
-  }
+  if (!design) notFound();
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -58,7 +48,6 @@ export default async function DesignDetailPage({ params }: PageProps) {
             className="w-full h-auto object-cover mb-4 rounded"
             priority
           />
-          {/* Add more images here if you want a gallery */}
         </div>
 
         <div className="lg:col-span-2">
@@ -74,19 +63,19 @@ export default async function DesignDetailPage({ params }: PageProps) {
             </h3>
             <div className="grid grid-cols-2 gap-4 text-gray-700">
               <div className="flex items-center">
-                <BedDouble className="w-5 h-5 mr-3 text-brand-green" />{" "}
+                <BedDouble className="w-5 h-5 mr-3 text-brand-green" />
                 {design.specs.bedrooms} Bedrooms
               </div>
               <div className="flex items-center">
-                <Bath className="w-5 h-5 mr-3 text-brand-green" />{" "}
+                <Bath className="w-5 h-5 mr-3 text-brand-green" />
                 {design.specs.bathrooms} Bathrooms
               </div>
               <div className="flex items-center">
-                <Square className="w-5 h-5 mr-3 text-brand-green" />{" "}
+                <Square className="w-5 h-5 mr-3 text-brand-green" />
                 {design.specs.area} m²
               </div>
               <div className="flex items-center">
-                <Layers className="w-5 h-5 mr-3 text-brand-green" />{" "}
+                <Layers className="w-5 h-5 mr-3 text-brand-green" />
                 {design.specs.floors} Floor(s)
               </div>
             </div>
