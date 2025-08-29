@@ -3,21 +3,18 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Button from "@/components/Button";
 import { BedDouble, Bath, Square, Layers } from "lucide-react";
-import type { Metadata } from "next";
-
-// Define the type for the component's props
-type Props = {
-  params: { slug: string };
-};
 
 // For generating static pages at build time
 export async function generateStaticParams() {
   return designs.map((design) => ({ slug: design.slug }));
 }
 
-// For generating metadata dynamically - corrected typing here as well
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const design = designs.find((d) => d.slug === params.slug);
+// For generating metadata dynamically
+export async function generateMetadata({ params }) {
+  // Await the params object
+  const resolvedParams = await params;
+  const design = designs.find((d) => d.slug === resolvedParams.slug);
+
   if (!design) {
     return {
       title: "Design Not Found | ManziHomes",
@@ -30,9 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-// Apply the new 'Props' type to the component function
-export default function DesignDetailPage({ params }: Props) {
-  const design = designs.find((d) => d.slug === params.slug);
+// MAKE THIS COMPONENT ASYNC
+export default async function DesignDetailPage({ params }) {
+  // Await the params object
+  const resolvedParams = await params;
+  const design = designs.find((d) => d.slug === resolvedParams.slug);
 
   if (!design) {
     notFound();
