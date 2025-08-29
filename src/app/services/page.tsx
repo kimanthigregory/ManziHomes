@@ -83,7 +83,7 @@ export default function ServicesPage() {
               Ready to Build Your Dream?
             </h2>
             <p className="max-w-xl mx-auto text-gray-700 mb-8">
-              Let's discuss how our expertise can bring your architectural
+              Let&apos;s discuss how our expertise can bring your architectural
               vision to life.
             </p>
             <Button href="/contact">Start a Project</Button>

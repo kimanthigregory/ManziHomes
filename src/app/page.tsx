@@ -180,10 +180,10 @@ export default function HomePage() {
                 ))}
               </div>
               <blockquote className="text-2xl font-serif italic mb-6">
-                "Working with ManziHomes was an absolute pleasure. They
+                &quot;Working with ManziHomes was an absolute pleasure. They
                 transformed our vague ideas into a stunning, functional home
                 that exceeded all our expectations. The attention to detail was
-                remarkable."
+                remarkable.&quot;
               </blockquote>
               <p className="font-bold tracking-wider">- The Omondi Family</p>
             </div>

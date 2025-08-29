@@ -33,7 +33,7 @@ export default function ContactPage() {
         <Reveal>
           <h1 className="text-5xl">Contact Us</h1>
           <p className="max-w-2xl mx-auto mt-4 text-lg">
-            We'd love to hear from you. Let's start a conversation.
+            We&apos;d love to hear from you. Let&apos;s start a conversation.
           </p>
         </Reveal>
       </header>

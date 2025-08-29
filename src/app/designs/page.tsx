@@ -25,7 +25,7 @@ export default function DesignsPage() {
         <h1 className="text-5xl font-bold mb-4">Our Designs</h1>
         <p className="max-w-2xl mx-auto text-lg px-4">
           Browse our curated collection of architectural designs. Use the
-          filters to find the perfect plan for your project, whether it's a
+          filters to find the perfect plan for your project, whether it&apos;s a
           modern apartment, a cozy bungalow, or a luxurious villa.
         </p>
       </div>
